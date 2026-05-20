@@ -43,7 +43,7 @@ jobs:
             -e WORDPRESS_DB_PASSWORD=wppass \
             -e WORDPRESS_DB_NAME=wordpress \
             --network host \
-            emreluta/wordpress-hardened:v2
+            emreluta/wordpress-hardened:v4
 
       - name: Wait for WordPress to be ready
         run: |
