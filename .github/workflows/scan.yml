@@ -58,6 +58,26 @@ jobs:
             sleep 5
           done
 
+      - name: Install WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+
+      - name: Complete WordPress installation via WP-CLI
+        run: |
+          docker exec wp-site bash -c "
+            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+            chmod +x wp-cli.phar
+            php wp-cli.phar core install \
+              --url='http://localhost' \
+              --title='Test WordPress Site' \
+              --admin_user='admin' \
+              --admin_password='admin123!' \
+              --admin_email='admin@test.com' \
+              --allow-root
+          "
+
       - name: Install WPScan
         run: |
           sudo apt-get update -qq
