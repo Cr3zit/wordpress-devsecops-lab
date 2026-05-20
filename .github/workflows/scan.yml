@@ -67,11 +67,11 @@ jobs:
       - name: Run WPScan and save results
         run: |
           mkdir -p scans
+          wpscan --update || true
           wpscan \
             --url http://localhost:80 \
             --enumerate u,vp,vt,tt,cb,dbe \
             --force \
-            --no-update \
             --format json \
             --output scans/wpscan-results.json \
           || true
