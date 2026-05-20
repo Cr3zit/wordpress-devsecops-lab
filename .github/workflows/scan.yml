@@ -43,7 +43,7 @@ jobs:
             -e WORDPRESS_DB_PASSWORD=wppass \
             -e WORDPRESS_DB_NAME=wordpress \
             --network host \
-            emreluta/wordpress-hardened:v5
+            emreluta/wordpress-hardened:v6
 
       - name: Wait for WordPress to be ready
         run: |
@@ -58,13 +58,14 @@ jobs:
             sleep 5
           done
 
-      - name: Install WP-CLI
+      - name: Debug container
         run: |
-          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          chmod +x wp-cli.phar
-          sudo mv wp-cli.phar /usr/local/bin/wp
+          echo "=== All containers ==="
+          docker ps -a
+          echo "=== WordPress logs ==="
+          docker logs wp-site
 
-      - name: Complete WordPress installation via WP-CLI
+      - name: Install WP-CLI and complete WordPress installation
         run: |
           docker exec wp-site bash -c "
             curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
